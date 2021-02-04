@@ -1,47 +1,41 @@
 ---
-- name: Installs virtual environment
-  hosts: all
-  become: True
-  vars_files:
-    - setup-vars.yml
-  tasks:
-    - name: Setup pre-requisite python3 packages
-      package:
-        name: "{{ yum_dependencies_python3 }}"
-        state: present
+- name: Setup pre-requisite python3 packages
+  package:
+    name: "{{ yum_dependencies_python3 }}"
+    state: present
 
-    - name: Setup pre-requisite pip3 packages
-      pip:
-        name: "{{ pip_dependencies }}"
-        state: present
-        executable: /usr/bin/pip3
+- name: Setup pre-requisite pip3 packages
+  pip:
+    name: "{{ pip_dependencies }}"
+    state: present
+    executable: /usr/bin/pip3
 
-    - name: Copy requirements.txt to target for FTL virtualenv
-      copy:
-        src: requirements.txt
-        dest: /tmp/requirements.txt
+- name: Copy requirements.txt to target for FTL virtualenv
+  copy:
+    src: requirements.txt
+    dest: /tmp/requirements.txt
 
-    - name: Install libselinux-python3
-      yum:
-        name: libselinux-python3
-        state: present
+- name: Install libselinux-python3
+  yum:
+    name: libselinux-python3
+    state: present
 
-    - name: "Create virtualenv {{ virtual_env_name }} for Learning Manager"
-      pip:
-        requirements: /tmp/requirements.txt
-        virtualenv: "{{ virtual_env_home }}/{{ virtual_env_name }}"
-        virtualenv_site_packages: no
-        virtualenv_command: /usr/local/bin/virtualenv
+- name: "Create virtualenv {{ virtual_env_name }} for Learning Manager"
+  pip:
+    requirements: /tmp/requirements.txt
+    virtualenv: "{{ virtual_env_home }}/{{ virtual_env_name }}"
+    virtualenv_site_packages: no
+    virtualenv_command: /usr/local/bin/virtualenv
 
-    - name: Clone Lab Manager git repo to host
-      git:
-        repo: "{{ lm_git_repo }}"
-        dest: "{{ lm_host_home }}"
-        version: "{{ lm_git_branch | default('main') }}"
-        force: yes
-      tags:
-        - clone
+- name: Clone Lab Manager git repo to host
+  git:
+    repo: "{{ lm_git_repo }}"
+    dest: "{{ lm_host_home }}"
+    version: "{{ lm_git_branch | default('main') }}"
+    force: yes
+  tags:
+    - clone
 
-    - name: Runs Lab Manager setup playbook
-      ignore_errors: yes
-      command: ansible-playbook "{{ lm_host_home }}/{{ lm_setup_file }}"
+- name: Runs Lab Manager setup playbook
+  ignore_errors: yes
+  command: ansible-playbook "{{ lm_host_home }}/{{ lm_setup_file }}"

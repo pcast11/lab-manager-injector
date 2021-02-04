@@ -1,0 +1,8 @@
+---
+- name: Installs the lab manager to a machine
+  hosts: host
+  become: true
+  tasks:
+    - name: Call the role
+      include_role:
+        name: lab-manager-injector
