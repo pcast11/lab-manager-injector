@@ -10,7 +10,7 @@
     state: present
     executable: /usr/bin/pip3
 
-- name: Copy requirements.txt to target for FTL virtualenv
+- name: Copy requirements.txt to target for Lab Manager virtualenv
   copy:
     src: requirements.txt
     dest: /tmp/requirements.txt
