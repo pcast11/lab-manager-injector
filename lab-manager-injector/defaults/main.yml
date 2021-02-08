@@ -1,15 +1,18 @@
 ---
-yum_dependencies_python3:
+lab-manager-injector-yum-dependencies-python3:
   - git
   - python3-pip
+  - libselinux-python3
 
-pip_dependencies:
+lab-manager-injector-pip-dependencies:
   - virtualenv
 
-virtual_env_home: /opt/virtualenvs
-virtual_env_name: venv-lab_manager
+lab-manager-injector-virtual-env-home: /opt/virtualenvs
+lab-manager-injector-virtual-env-name: venv-lab_manager
 
-lm_git_repo: https://github.com/redhat-gpe/rhlearning.lab_manager.git
-lm_host_home: /opt/lm_repo_clone
+lab-manager-injector-git-repo: https://github.com/redhat-gpe/rhlearning.lab_manager.git
+lab-manager-injector-home: /opt/lm_repo_clone
 
-lm_setup_file: setup.yml
+lab-manager-injector-setup-file: setup.yml
+
+lab-manager-git-branch: main
