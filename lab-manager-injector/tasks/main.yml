@@ -1,12 +1,12 @@
 ---
 - name: Setup pre-requisite python3 packages
   package:
-    name: "{{ lab-manager-injector-yum-dependencies-python3 }}"
+    name: "{{ lab_manager_injector_yum_dependencies_python3 }}"
     state: present
 
 - name: Setup pre-requisite pip3 packages
   pip:
-    name: "{{ lab-manager-injector-pip-dependencies }}"
+    name: "{{ lab_manager_injector_pip_dependencies }}"
     state: present
     executable: /usr/bin/pip3
 
@@ -18,19 +18,19 @@
 - name: "Create virtualenv {{ virtual_env_name }} for Learning Manager"
   pip:
     requirements: /tmp/requirements.txt
-    virtualenv: "{{ lab-manager-injector-virtual-env-home }}/{{ lab-manager-injector-virtual-env-name }}"
+    virtualenv: "{{ lab_manager_injector_virtual_env_home }}/{{ lab_manager_injector_virtual_env_name }}"
     virtualenv_site_packages: no
     virtualenv_command: /usr/local/bin/virtualenv
 
 - name: Clone Lab Manager git repo to host
   git:
-    repo: "{{ lab-manager-injector-git-repo }}"
-    dest: "{{ lab-manager-injector-home }}"
-    version: "{{ lab-manager-git-branch | default('main') }}"
+    repo: "{{ lab_manager_injector_git_repo }}"
+    dest: "{{ lab_manager_injector_home }}"
+    version: "{{ lab_manager_git_branch | default('main') }}"
     force: yes
   tags:
     - clone
 
 - name: Runs Lab Manager setup playbook
   ignore_errors: yes
-  command: ansible-playbook "{{ lab-manager-injector-home}}/{{ lab-manager-injector-setup-file }}"
+  command: ansible-playbook "{{ lab_manager_injector_home}}/{{ lab_manager_injector_setup_file }}"
