@@ -1,0 +1,43 @@
+Lab Manager Injection for Testing Instructions
+----------------------------------------------
+
+To inject lab manager for testing, you can use the following:
+
+Set up your inventory to point at the specific hosts you need your automation to run against, like the example below:
+
+----
+[target]
+utility1.multi-utility-00.dynamic.opentlc.com 
+utility2.multi-utility-00.dynamic.opentlc.com
+----
+
+Then, you should create a playbook to execute the injector role, let’s call if playbook-injector.yml, like this:
+----
+
+- name: Install lab manager on your target hosts
+  hosts: target
+  become: true
+  gather_facts: false
+
+  roles:
+    - lab-manager-injector
+----
+
+You may also add your own fork/branch of the lab manager repository as a variable if you have one.
+
+Clone a copy of lab-manager-injector into a roles directory, which is in the same directory as your playbook.
+
+The directory structure should look like this:
+
+----
+- playbook-injector.yml
+- inventory
+- roles
+  - lab-maganer-injector
+----
+
+Then simply execute the playbook by running:
+
+----
+ansible-playbook playbook-injector.yml
+----
