@@ -1,38 +1,44 @@
-Role Name
-=========
+# Ansible Role: Lab Manager Respository Injector
 
-A brief description of the role goes here.
+Installs the [Lab Manager Repository](https://github.com/redhat-gpe/rhlearning.lab_manager) for RHEL.
 
-Requirements
-------------
+## Requirements
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+This role only is needed/runs on RHEL and its derivatives.
 
-Role Variables
---------------
+## Role Variables
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+Available variables are listed below, along with default values (see `defaults/main.yml`):
 
-Dependencies
-------------
+lab_manager_injector_yum_dependencies_python3: 
+  - git 
+  - python3-pip 
+  - libselinux-python3
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+lab_manager_injector_pip_dependencies: 
+  - virtualenv
 
-Example Playbook
-----------------
+lab_manager_injector_virtual_env_home: /opt/virtualenvs
+lab_manager_injector_virtual_env_name: venv-lab_manager
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+lab_manager_injector_git_repo: https://github.com/redhat-gpe/rhlearning.lab_manager.git
+lab_manager_injector_home: /opt/lm_repo_clone
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+lab_manager_injector_setup_file: setup.yml
 
-License
--------
+lab_manager_git_branch: main
 
-BSD
+## Dependencies
 
-Author Information
-------------------
+None.
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+## Example Playbook
+---
+- name: Installs the lab manager to a machine
+  hosts: host
+  become: true
+  tasks:
+    - name: Call the role
+      include_role:
+        name: lab-manager-injector
+
