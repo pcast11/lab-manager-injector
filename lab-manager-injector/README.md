@@ -32,7 +32,7 @@ lab_manager_git_branch: main
 
 ## Dependencies
 
-None.
+Ansible 2.10 and Python 3
 
 ## Example Playbook
 ```yaml
